@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"github.com/biezhi/gorm-paginator/pagination"
@@ -31,6 +30,11 @@ func MainPage(w http.ResponseWriter, r *http.Request) {
 func PostHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	response := fmt.Sprintf("Product %s", id)
-	fmt.Fprint(w, response)
+	db := connectToDB()
+	defer db.Close()
+	var post Post
+	db.Where("id = ?", id).First(&post)
+	var posts []Post
+	posts = append(posts, post)
+	servePostsJson(w, posts)
 }

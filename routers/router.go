@@ -8,7 +8,7 @@ import (
 func SetupRoutes() mux.Router {
 	var Router = mux.NewRouter()
 	Router.HandleFunc("/", controllers.MainPage)
-	Router.HandleFunc("/products/{id:[0-9]+}", controllers.PostHandler)
+	Router.HandleFunc("/post/{id:[0-9]+}", controllers.PostHandler)
 
 	return *Router
 }

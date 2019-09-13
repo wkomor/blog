@@ -18,6 +18,7 @@ type Page struct {
 }
 
 type Post struct {
+    Id int
 	Created time.Time
 	Title string
 	Text template.HTML

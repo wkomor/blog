@@ -8,8 +8,8 @@ import (
 
 func main() {
 	router := routers.SetupRoutes()
-	http.Handle("/", &router)
+	/* http.Handle("/", &router) */
 	fmt.Println("Server is listening...")
 	
-	http.ListenAndServe(":8181", nil)
+	http.ListenAndServe(":8181",  &router)
 }

@@ -4,6 +4,8 @@ import axios from 'axios'
 import renderHTML from 'react-render-html'
 import Pagination from "react-js-pagination";
 
+const SERVER_URL = 'http://127.0.0.1:8181'
+
 class App extends React.Component {
 
     static propTypes = {
@@ -17,24 +19,30 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        axios.get('http://127.0.0.1:8181')
+        axios.get(SERVER_URL)
         .then(response => this.setState({data: response.data}))
     }
   
     handlePageChange(pageNumber) {
       this.setState({ activePage: pageNumber });
-      axios.get(`http://127.0.0.1:8181?page=${pageNumber}`)
+      axios.get(`${SERVER_URL}?page=${pageNumber}`)
         .then(response => this.setState({ data: response.data }))
       window.scrollTo(0, 0)
     }
 
+    handleGetPost(id){
+      axios.get(`${SERVER_URL}/post/${id}`)
+        .then(response => this.setState({ data: response.data }))
+    }
+
     render() {
+      console.log(this.state.data)
       const posts = this.state.data.map(item => {
         return (
           <div class="row">
             <div class="panel panel-default">
               <div class="panel-body">
-                <h2><a href="/post/{{ post.key().id() }}">{item.Title}</a></h2>
+                <h2 onClick={() => this.handleGetPost(item.Id)}><a href="#">{item.Title}</a></h2>
                 <div id="post_body">{renderHTML(item.Text)}</div>
               </div>
             </div>
