@@ -1,0 +1,9 @@
+@font-face {
+    font-family: CanelaBarkBoldPersonal;
+    src: url(../fonts/CanelaBarkBoldPersonal.ttf);
+}
+
+header h1{
+    font-family: CanelaBarkBoldPersonal, sans-serif;
+    font-size: 50px;
+}
