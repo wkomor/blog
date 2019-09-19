@@ -14,25 +14,25 @@ class App extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {data: [], activePage: 1}
+      this.state = {data: [], activePage: 1, count: 1}
       this.handlePageChange = this.handlePageChange.bind(this)
     }
 
     componentWillMount() {
         axios.get(SERVER_URL)
-        .then(response => this.setState({data: response.data}))
+          .then(response => this.setState({ data: response.data.Posts, count: response.data.Count}))
     }
   
     handlePageChange(pageNumber) {
       this.setState({ activePage: pageNumber });
       axios.get(`${SERVER_URL}?page=${pageNumber}`)
-        .then(response => this.setState({ data: response.data }))
+        .then(response => this.setState({ data: response.data.Posts }))
       window.scrollTo(0, 0)
     }
 
     handleGetPost(id){
       axios.get(`${SERVER_URL}/post/${id}`)
-        .then(response => this.setState({ data: response.data }))
+        .then(response => this.setState({ data: response.data.Posts }))
     }
 
     render() {
@@ -57,7 +57,7 @@ class App extends React.Component {
               <Pagination
                 activePage={this.state.activePage}
                 itemsCountPerPage={5}
-                totalItemsCount={1000}
+                totalItemsCount={this.state.count}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange}
               />

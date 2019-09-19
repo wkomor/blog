@@ -13,7 +13,7 @@ import (
 )
 
 type Page struct {
-    Title string
+    Count int
     Posts  []Post
 }
 
@@ -22,7 +22,8 @@ type Post struct {
 	Created time.Time
 	Title string
 	Text template.HTML
-	Publish bool
+    Publish bool
+    Language string
 }
 
 
@@ -32,11 +33,16 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 }
 
 func servePostsJson(w http.ResponseWriter, posts []Post) {
-    js, err := json.Marshal(posts)
+    var data Page
+    data.Posts = posts
+    data.Count = 22
+    js, err := json.Marshal(data)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
+/*     mapD := map[string]int{"count": 22}
+    js, _ = json.Marshal(mapD) */
     w.Header().Set("Content-Type", "application/json")
     w.Header().Set("Access-Control-Allow-Origin", "*")
     w.Write(js)
@@ -57,5 +63,4 @@ func connectToDB() *gorm.DB {
       panic(err.Error() + " failed to connect database")
     }
     return db
-
-  }
+}
