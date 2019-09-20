@@ -2,9 +2,11 @@ import React from "react"
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import renderHTML from 'react-render-html'
-import Pagination from "react-js-pagination";
+import Pagination from "react-js-pagination"
 
-const SERVER_URL = 'http://127.0.0.1:8181/api/v1'
+
+const SERVER_URL = 'http://' + process.env.API_URL + '/api/v1'
+console.log(SERVER_URL)
 
 class App extends React.Component {
 
