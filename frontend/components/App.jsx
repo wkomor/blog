@@ -4,7 +4,7 @@ import axios from 'axios'
 import renderHTML from 'react-render-html'
 import Pagination from "react-js-pagination";
 
-const SERVER_URL = 'http://127.0.0.1:8181'
+const SERVER_URL = 'http://127.0.0.1:8181/api/v1'
 
 class App extends React.Component {
 
@@ -19,13 +19,13 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        axios.get(SERVER_URL)
+        axios.get(SERVER_URL + "/")
           .then(response => this.setState({ data: response.data.Posts, count: response.data.Count}))
     }
   
     handlePageChange(pageNumber) {
       this.setState({ activePage: pageNumber });
-      axios.get(`${SERVER_URL}?page=${pageNumber}`)
+      axios.get(`${SERVER_URL}/?page=${pageNumber}`)
         .then(response => this.setState({ data: response.data.Posts }))
       window.scrollTo(0, 0)
     }

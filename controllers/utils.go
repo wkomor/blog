@@ -3,7 +3,6 @@ package controllers
 import (
     "os"
     "net/http"
-    "time"
     "log"
     "html/template"
     "encoding/json"
@@ -11,21 +10,6 @@ import (
     "github.com/joho/godotenv"
 	_ "github.com/jinzhu/gorm/dialects/mysql"  // driver for mysql
 )
-
-type Page struct {
-    Count int
-    Posts  []Post
-}
-
-type Post struct {
-    Id int
-	Created time.Time
-	Title string
-	Text template.HTML
-    Publish bool
-    Language string
-}
-
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
     t, _ := template.ParseFiles(tmpl)
@@ -41,8 +25,6 @@ func servePostsJson(w http.ResponseWriter, posts []Post) {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
-/*     mapD := map[string]int{"count": 22}
-    js, _ = json.Marshal(mapD) */
     w.Header().Set("Content-Type", "application/json")
     w.Header().Set("Access-Control-Allow-Origin", "*")
     w.Write(js)
