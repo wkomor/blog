@@ -57,7 +57,10 @@ func connectToDB() *gorm.DB {
     }
     dbPass := os.Getenv("DB_PASS")
     dbUser := os.Getenv("DB_USER")
-    connection := dbUser + ":" + dbPass + "@/komorovski?charset=utf8&parseTime=True&loc=Local"
+    dbHost := os.Getenv("DB_HOST")
+    dbPort := os.Getenv("DB_PORT")
+    dbName := os.Getenv("DB_NAME")
+    connection := dbUser + ":" + dbPass + "@(" + dbHost + ":" + dbPort + ")/" + dbName +"?charset=utf8&parseTime=True&loc=Local"
     db, err := gorm.Open("mysql", connection)
     if err != nil {
       panic(err.Error() + " failed to connect database")
