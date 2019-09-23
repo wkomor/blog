@@ -1,13 +1,16 @@
-const http = require('http')
+let express = require('express')
+let path = require('path')
+
 const port = 3000
-const requestHandler = (request, response) => {
-    console.log(request.url)
-    response.end('Hello Node.js Server!')
-}
-const server = http.createServer(requestHandler)
-server.listen(port, (err) => {
-    if (err) {
-        return console.log('something bad happened', err)
-    }
-    console.log(`server is listening on ${port}`)
+
+let app = express()
+
+app.get('/', function (req, res) {
+    res.sendFile('index.html', { root: path.join(__dirname, '../') })
 })
+
+app.use('/static', express.static('static'))
+
+app.listen(port);
+
+console.log(`server is listening on ${port}`)

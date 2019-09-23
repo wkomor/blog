@@ -6,7 +6,6 @@ import Pagination from "react-js-pagination"
 
 
 const SERVER_URL = 'http://komorovski.ru:8181/api/v1'
-console.log(SERVER_URL)
 
 class App extends React.Component {
 
