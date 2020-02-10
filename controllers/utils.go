@@ -8,7 +8,7 @@ import (
     "encoding/json"
     "github.com/jinzhu/gorm"
     "github.com/joho/godotenv"
-	_ "github.com/jinzhu/gorm/dialects/mysql"  // driver for mysql
+	_ "github.com/jinzhu/gorm/dialects/postgres"  // driver for mysql
 )
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
@@ -42,7 +42,7 @@ func connectToDB() *gorm.DB {
     dbHost := os.Getenv("DB_HOST")
     dbPort := os.Getenv("DB_PORT")
     dbName := os.Getenv("DB_NAME")
-    connection := dbUser + ":" + dbPass + "@(" + dbHost + ":" + dbPort + ")/" + dbName +"?charset=utf8&parseTime=True&loc=Local"
+    connection := "user=" + dbUser + " password=" + dbPass + " host=" + dbHost + " port=" + dbPort + " dbname=" + dbName
     db, err := gorm.Open("mysql", connection)
     if err != nil {
       panic(err.Error() + " failed to connect database")
